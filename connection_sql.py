@@ -6,6 +6,7 @@
 @Title : CURD-Operations
 '''
 # Importing Module for setting connection with MSSQL
+from email.headerregistry import Address
 import pyodbc
 
 
@@ -56,6 +57,49 @@ def inserting_data():
         mycursor.commit()
 
 
+def update_data():
+    """
+        Description: This function is to update data in DB by taking inputs from console.
+        Parameters: None
+        Returns: None, Just Update DB with new records.
+    """
+    updated_customerID = int(
+        input("Enter Customer ID for updating the record"))
+    sql_query = "SELECT * FROM customer_info WHERE ID = ?"
+    try:
+        mycursor.execute(sql_query, updated_customerID)
+        customer = mycursor.fetchall()
+        for data in customer:
+            Name = data[1]
+            Address = data[2]
+            Phone = data[3]
+            Zip = data[4]
+            Email = data[5]
+        option = int(input(
+            "Choose option for updating: \n\"1\" for Name\n\"2\" for Address\n\"3\" for Phone\n\"4\" for Phone\n\"5\" for Zip"))
+        if option == 1:
+            Name = input("Enter updated name: ")
+        elif option == 2:
+            Address = input("Enter updated Address: ")
+        elif option == 3:
+            Phone = int(input("Enter phone number: "))
+        elif option == 4:
+            Zip = int(input("Enter Zip Code: "))
+        elif option == 5:
+            Email = input("Enter updated mail: ")
+        else:
+            print("Enter valid choice")
+        updated_data = [Name, Address,
+                        Phone, Zip, Email, updated_customerID]
+        sql_query = "UPDATE customer_info SET Name = ?,Address = ?,Phone = ?,Zip = ?,Email = ? WHERE ID = ?"
+        mycursor.execute(sql_query, updated_data)
+    except Exception as ex:
+        print(ex)
+    else:
+        print("Updated Successfully")
+        mycursor.commit()
+
+
 def reading_data():
     """
         Description: This function is to read data from DB by starting query
@@ -75,5 +119,6 @@ def reading_data():
 
 
 if __name__ == '__main__':
-    inserting_data()
+    # inserting_data()
+    update_data()
     reading_data()
