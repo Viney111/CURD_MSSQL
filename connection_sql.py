@@ -59,7 +59,7 @@ def inserting_data():
 
 def update_data():
     """
-        Description: This function is to update data in DB by taking inputs from console.
+        Description: This function is to update data in DB by taking ID from Console.
         Parameters: None
         Returns: None, Just Update DB with new records.
     """
@@ -100,6 +100,23 @@ def update_data():
         mycursor.commit()
 
 
+def delete_data():
+    """
+        Description: This function is to delete data in DB by taking ID from Console.
+        Parameters: None
+        Returns: None, Just Delete row with ID Selected
+    """
+    deleted_customerID = int(
+        input("Enter Customer ID for deleting the record"))
+    sql_query = "DELETE FROM customer_info WHERE ID = ?"
+    try:
+        mycursor.execute(sql_query, deleted_customerID)
+    except Exception as ex:
+        print(ex)
+    else:
+        mycursor.commit()
+
+
 def reading_data():
     """
         Description: This function is to read data from DB by starting query
@@ -112,13 +129,34 @@ def reading_data():
             print(i)
     except Exception as ex:
         print(ex)
+
+
+def curd_operations():
+    """
+        Description: This function is to perform any CURD Operation as choosen by user
+        Parameters: None
+        Returns: None, Just Perfor selected Curd Operation
+    """
+    try:
+        while(True):
+            user_choice = int(input(
+                "Select CURD Operation:\n\"1\" Update\n\"2\" Insert\n\"3\" Delete\n\"4\" Read\n\"Any Other Key\" for Exiting: "))
+            if user_choice == 1:
+                update_data()
+            elif user_choice == 2:
+                inserting_data()
+            elif user_choice == 3:
+                delete_data()
+            elif user_choice == 4:
+                reading_data()
+            else:
+                break
+    except Exception as ex:
+        print(ex)
     finally:
-        # Closing the cursor and connection finally
         mycursor.close()
         connection_str.close()
 
 
 if __name__ == '__main__':
-    # inserting_data()
-    update_data()
-    reading_data()
+    curd_operations()
