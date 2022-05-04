@@ -17,7 +17,7 @@ print("Welcome to MSSQL Connection in Python")
 app = Flask(__name__)
 api = Api(app)
 server = config('server')
-database = config('database')
+database = config('database1')
 username = config('username')
 
 # Connection String for connecting MSSQL

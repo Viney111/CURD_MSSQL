@@ -11,7 +11,7 @@ from decouple import config
 print("Welcome to MSSQL Connection in Python")
 
 server = config('server')
-database = config('database')
+database = config('database1')
 username = config('username')
 
 # Connection String for connecting MSSQL
