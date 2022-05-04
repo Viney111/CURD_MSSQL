@@ -3,18 +3,16 @@
 @Date: 2021-05-02 13:56
 @Last Modified by: Viney Khaneja
 @Last Modified time: None
-@Title : CURD-Operations
+@Title : CURD-Operations in MSSQL Through Console
 '''
 # Importing Module for setting connection with MSSQL
-from email.headerregistry import Address
 import pyodbc
-
-
+from decouple import config
 print("Welcome to MSSQL Connection in Python")
 
-server = "LAPTOP-IUMGL5A5"
-database = "customer_services"
-username = "LAPTOP-IUMGL5A5\Kashish Manchanda"
+server = config('server')
+database = config('database')
+username = config('username')
 
 # Connection String for connecting MSSQL
 try:
@@ -125,6 +123,7 @@ def reading_data():
     """
     try:
         mycursor.execute("SELECT * FROM customer_info")
+        print(mycursor)
         for i in mycursor:
             print(i)
     except Exception as ex:
